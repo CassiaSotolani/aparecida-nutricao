@@ -1,29 +1,33 @@
 var titulo = document.querySelector('.titulo');
 titulo.textContent = "Cassia Sotolani - Nutrição";
 
-var paciente = document.querySelector('#primeiro-paciente');
-var tdPeso = paciente.querySelector('.info-peso');
-var peso = tdPeso.textContent;
-var tdAltura = paciente.querySelector('.info-altura');
-var altura = tdAltura.textContent;
-var imc = document.querySelector('.info-imc');
+var pacientes = document.querySelectorAll('.paciente');
 
-var pesoEhValido = true;
-var alturaEhValida = true;
+for(var i = 0; i < pacientes.length; i++) {
+    var tdPeso = pacientes[i].querySelector('.info-peso');
+    var peso = tdPeso.textContent;
 
-if(peso <= 0 || peso >= 1000) {
-    console.log("Peso inválido!");
-    pesoEhValido = false;
-    imc.textContent = "Peso inválido!";
+    var tdAltura = pacientes[i].querySelector('.info-altura');
+    var altura = tdAltura.textContent;
+
+    var tdImc = pacientes[i].querySelector('.info-imc');
+
+    var pesoEhValido = true;
+    var alturaEhValida = true;
+
+    if(peso <= 0 || peso >= 1000) {
+        pesoEhValido = false;
+        tdImc.textContent = "Peso inválido!";
+    }
+
+    if(altura <= 0 || altura >= 3.00) {
+        alturaEhValida = false;
+        tdImc.textContent = "Altura inválida!";
+    }
+
+    if(alturaEhValida && pesoEhValido) {
+        var imcPrimeiroPaciente = (peso / (altura * altura));
+        tdImc.textContent = imcPrimeiroPaciente.toFixed(2);
+    }
 }
 
-if(altura <= 0 || altura >= 3.00) {
-    console.log("Altura inválida!");
-    alturaEhValida = false;
-    imc.textContent = "Altura inválida!";
-}
-
-if(alturaEhValida && pesoEhValido) {
-    var imcPrimeiroPaciente = peso / (altura * altura);
-    imc.textContent = imcPrimeiroPaciente;
-}
