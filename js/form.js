@@ -1,36 +1,18 @@
+// Quando clicamos no botão adicionar
 function adicionarPaciente(event) {
     event.preventDefault();
 
     var form = document.querySelector('#form-adiciona');
 
-    // Extraindo informações do paciente do form
     var paciente = obterPacienteDoForm(form);
 
-    // Cria a tr e a td do paciente
-    var pacienteTr = document.createElement('tr');
-
-    var nomeTd = document.createElement('td');
-    var pesoTd = document.createElement('td');
-    var alturaTd = document.createElement('td');
-    var gorduraTd = document.createElement('td');
-    var imcTd = document.createElement('td');
-
-    nomeTd.textContent = nome;
-    pesoTd.textContent = peso;
-    alturaTd.textContent = altura;
-    gorduraTd.textContent = gordura;
-    imcTd.textContent = calcularImc(peso, altura);
-    
-    pacienteTr.appendChild(nomeTd);
-    pacienteTr.appendChild(pesoTd);
-    pacienteTr.appendChild(alturaTd);
-    pacienteTr.appendChild(gorduraTd);
-    pacienteTr.appendChild(imcTd);
+    var pacienteTr = montarTr(paciente);
 
     // Adicionando o paciente na tabela
     var tabela = document.querySelector('#tabela-pacientes')
     tabela.appendChild(pacienteTr);
 
+    form.reset();
 }
 
 // Extraindo informações do paciente do form
@@ -43,6 +25,29 @@ function obterPacienteDoForm(form) {
         imc: calcularImc(form.peso.value, form.altura.value)
     }
     return paciente;
+}
+
+// Cria a tr, add class e coloca td como filho
+function montarTr (paciente) {
+    var pacienteTr = document.createElement('tr');
+    pacienteTr.classList.add('paciente');
+
+    pacienteTr.appendChild(montarTd(paciente.nome, 'info-nome'));
+    pacienteTr.appendChild(montarTd(paciente.peso, 'info-peso'));
+    pacienteTr.appendChild(montarTd(paciente.altura, 'info-altura'));
+    pacienteTr.appendChild(montarTd(paciente.gordura, 'info-gordura'));
+    pacienteTr.appendChild(montarTd(paciente.imc, 'info-imc'));
+
+    return pacienteTr;
+}
+
+// Cria o td do paciente e adiciona a class dos td
+function montarTd(dado, classe) {
+    var td = document.createElement('td');
+    td.textContent = dado;
+    td.classList.add(classe);
+
+    return td;
 }
 
 var botaoAdicionar = document.querySelector('#adicionar-paciente');
